@@ -1,28 +1,34 @@
 (function () {
 'use strict';
 
-angular.module('NameCalculator', [])
+angular.module('LunchCheck', [])
 
-.controller('NameCalculatorController', function ($scope) {
-  $scope.name = "";
-  $scope.totalValue = 0;
+.controller('LunchCheckController', LunchCheckController);
 
-  $scope.displayNumeric = function () {
-    var totalNameValue = calculateNumericForString($scope.name);
-    $scope.totalValue = totalNameValue;
+LunchCheckController.$inject = [$scope];
+function LunchCheckController($scope) {
+  $scope.launchMessage = "";
+  $scope.launchList = "";
+
+  $scope.displayLaunchMessage = function () {
+    var message = calculateLaunchMessage($scope.launchList);
+    $scope.launchMessage = message;
   };
 
-
-  function calculateNumericForString(string) {
-    var totalStringValue = 0;
-    for (var i = 0; i < string.length; i++) {
-      totalStringValue += string.charCodeAt(i);
+  function calculateLaunchMessage(itemList) {
+    var itemArray = "";
+    
+    if (itemList == ""){
+      return "No items found";
     }
+    itemArray = itemList.split(',');
 
-    return totalStringValue;
+    if (itemArray.length < 4) {
+      return "Yastás";
+    } else {
+      return "Try again";
+    };
   }
-
-});
-
+}
 
 })();
